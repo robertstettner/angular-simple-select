@@ -1,0 +1,19 @@
+{
+    "name"      : "angular-simple-select",
+    "version"   : "0.0.1",
+    "main"      : [
+        "angular-simple-select.js",
+        "angular-simple-select.css"
+    ],
+    "ignore"    : [
+        ".git",
+        ".gitignore",
+        "bower.json",
+        "README.md",        
+        "screenshot.png"
+    ],
+    "dependencies": {
+        "angular": ">=1",
+        "font-awesome": ">=4.1.0"
+    }
+}
