@@ -9,7 +9,8 @@
     color: inherit;
     line-height: 1.6;
     cursor: pointer;
-    user-select: none;
+    -webkit-user-select: none;
+            user-select: none;
 }
 .simple-select li:before {
     position: absolute;
