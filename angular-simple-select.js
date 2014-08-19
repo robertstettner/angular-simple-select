@@ -36,12 +36,12 @@
         restrict: 'AE',
         replace: true,
         scope: {   
-            model: '=',
+            collection: '=',
             onItemClick: '&'                   
         },
         template:
         	'<ul class="simple-select">' +
-                '<li ng-repeat="item in items" ng-class="{active: item.active}" ng-click="toggle(item)">' + 
+                '<li ng-repeat="item in collection" ng-class="{active: item.active}" ng-click="toggle(item)">' + 
                 	'<span class="icon" ng-if="item.icon" ng-bind-html="item.icon"></span>' +
                 	'<span>{{item.name}}</span>' +
                 '</li>' +
@@ -55,7 +55,7 @@
                 $scope.clickedItem = item;
         	};
         	
-        	$scope.$watch( 'model' , function( val ) {                                 
+        	$scope.$watch( 'collection' , function( val ) {                                 
                 if ( val && $scope.clickedItem !== null ) {                        
                     $timeout( function() {
                         $scope.onItemClick( { data: $scope.clickedItem } );

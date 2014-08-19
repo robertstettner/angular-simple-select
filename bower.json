@@ -9,8 +9,7 @@
         ".git",
         ".gitignore",
         "bower.json",
-        "README.md",        
-        "screenshot.png"
+        "README.md"
     ],
     "dependencies": {
         "angular": ">=1",
