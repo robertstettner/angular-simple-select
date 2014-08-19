@@ -41,7 +41,7 @@
         },
         template:
         	'<ul class="simple-select">' +
-                '<li ng-repeat="item in collection" ng-class="{active: item.active}" ng-click="toggle(item)">' + 
+                '<li ng-repeat="item in collection" ng-class="{active: item.ticked}" ng-click="toggle(item)">' + 
                 	'<span class="icon" ng-if="item.icon" ng-bind-html="item.icon"></span>' +
                 	'<span>{{item.name}}</span>' +
                 '</li>' +
@@ -51,7 +51,7 @@
         	$scope.clickedItem = null;       
         	
         	$scope.toggle = function( item ) {
-                item.active = !item.active;
+                item.ticked = !item.ticked;
                 $scope.clickedItem = item;
         	};
         	
