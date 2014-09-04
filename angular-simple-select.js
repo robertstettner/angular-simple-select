@@ -31,7 +31,7 @@
  * --------------------------------------------------------------------------------
  */
 
- angular.module( 'simple-select', ['ng'] ).directive( 'simpleSelect' , [ '$timeout', function ( $timeout ) {
+ angular.module( 'simple-select', ['ng'] ).directive( 'simpleSelect' , [ '$sce', '$timeout', function ( $sce, $timeout ) {
     return {
         restrict: 'AE',
         replace: true,
@@ -40,22 +40,25 @@
             onItemClick: '&'                   
         },
         template:
-        	'<ul class="simple-select">' +
+            '<ul class="simple-select">' +
                 '<li ng-repeat="item in collection" ng-class="{active: item.ticked}" ng-click="toggle(item)">' + 
-                	'<span class="icon" ng-if="item.icon" ng-bind-html-unsafe="item.icon"></span>' +
-                	'<span>{{item.name}}</span>' +
+                    '<span class="icon" ng-if="item.icon" ng-bind-html="trustHtml(item.icon)"></span>' +
+                    '<span>{{item.name}}</span>' +
                 '</li>' +
             '</ul>',
 
         link: function ( $scope, element, attrs ) {
-        	$scope.clickedItem = null;       
-        	
-        	$scope.toggle = function( item ) {
+            $scope.clickedItem = null;
+            $scope.trustHtml = function(html) {
+                return $sce.trustAsHtml(html);
+            };
+            
+            $scope.toggle = function( item ) {
                 item.ticked = !item.ticked;
                 $scope.clickedItem = item;
-        	};
-        	
-        	$scope.$watch( 'collection' , function( val ) {                                 
+            };
+            
+            $scope.$watch( 'collection' , function( val ) {                                 
                 if ( val && $scope.clickedItem !== null ) {                        
                     $timeout( function() {
                         $scope.onItemClick( { data: $scope.clickedItem } );
