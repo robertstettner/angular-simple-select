@@ -42,7 +42,7 @@
         template:
         	'<ul class="simple-select">' +
                 '<li ng-repeat="item in collection" ng-class="{active: item.ticked}" ng-click="toggle(item)">' + 
-                	'<span class="icon" ng-if="item.icon" ng-bind-html="item.icon"></span>' +
+                	'<span class="icon" ng-if="item.icon" ng-bind-html-unsafe="item.icon"></span>' +
                 	'<span>{{item.name}}</span>' +
                 '</li>' +
             '</ul>',
