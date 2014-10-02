@@ -3,7 +3,7 @@
  * Creates a simple list with icon checkboxes. 
  *
  * Project started on: Tue, 19 Aug 2014
- * Current version: 0.0.1
+ * Current version: 0.0.2
  * 
  * Released under the MIT License
  * --------------------------------------------------------------------------------
@@ -37,18 +37,21 @@
         replace: true,
         scope: {   
             collection: '=',
+            itemName: '@',
             onItemClick: '&'                   
         },
         template:
             '<ul class="simple-select">' +
                 '<li ng-repeat="item in collection" ng-class="{active: item.ticked}" ng-click="toggle(item)">' + 
                     '<span class="icon" ng-if="item.icon" ng-bind-html="trustHtml(item.icon)"></span>' +
-                    '<span>{{item.name}}</span>' +
+                    '<span>{{item[itemName]}}</span>' +
                 '</li>' +
             '</ul>',
 
         link: function ( $scope, element, attrs ) {
             $scope.clickedItem = null;
+            $scope.itemName = $scope.itemName || 'name';
+            
             $scope.trustHtml = function(html) {
                 return $sce.trustAsHtml(html);
             };
