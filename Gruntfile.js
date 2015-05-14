@@ -5,7 +5,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
   // Default task.
-  grunt.registerTask('test', ['jshint', 'karma:unit']);
+  grunt.registerTask('test', ['jshint', 'karma:unit', 'ngAnnotate', 'uglify']);
   grunt.registerTask('default', ['ngAnnotate', 'uglify']);
 
   // Project configuration.
