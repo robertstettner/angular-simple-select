@@ -1,6 +1,6 @@
 {
     "name"      : "angular-simple-select",
-    "version"   : "0.0.3",
+    "version"   : "0.0.5",
     "main"      : [
         "dist/angular-simple-select.min.js",
         "dist/angular-simple-select.css"
