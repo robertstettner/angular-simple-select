@@ -1,12 +1,11 @@
 {
     "name"      : "angular-simple-select",
-    "version"   : "0.0.5",
+    "version"   : "0.0.7",
     "main"      : [
         "dist/angular-simple-select.min.js",
         "dist/angular-simple-select.css"
     ],
     "ignore"    : [
-        "src",
 		"test",
 		".jshintrc",
 		"package.json",
