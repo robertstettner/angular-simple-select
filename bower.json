@@ -1,18 +1,27 @@
 {
     "name"      : "angular-simple-select",
-    "version"   : "0.0.1",
+    "version"   : "0.0.2",
     "main"      : [
-        "angular-simple-select.js",
-        "angular-simple-select.css"
+        "dist/angular-simple-select.min.js",
+        "dist/angular-simple-select.css"
     ],
     "ignore"    : [
-        ".git",
-        ".gitignore",
-        "bower.json",
+        "src",
+		"test",
+		".jshintrc",
+		"package.json",
+		"gruntfile.js",
+		"karma.conf.js",
+		"demo",
+		".gitignore",
+        "npm-debug.log",
         "README.md"
     ],
     "dependencies": {
-        "angular": ">=1",
+        "angular": "~1.x",
         "font-awesome": ">=4.1.0"
+    },
+    "devDependencies": {
+        "angular-mocks": "~1.x"
     }
 }
