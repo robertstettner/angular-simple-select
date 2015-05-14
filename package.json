@@ -1,6 +1,6 @@
 {
   "name": "angular-simple-select",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Angular simple select.",
   "author": "https://github.com/robertstettner/angular-simple-select/graphs/contributors",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "load-grunt-tasks": "~2.0.0"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
