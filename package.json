@@ -1,6 +1,6 @@
 {
   "name": "angular-simple-select",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Angular simple select.",
   "author": "https://github.com/robertstettner/angular-simple-select/graphs/contributors",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "angular-ui-publisher": "~1.x",
     "grunt": "~0.4.5",
     "grunt-contrib-connect": "~0.9.0",
-    "grunt-contrib-copy": "~0.7.0",
+    "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-uglify": "~0.7.0",
     "grunt-contrib-watch": "~0.6.1",
@@ -28,7 +28,7 @@
     "load-grunt-tasks": "~2.0.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt"
   },
   "repository": {
     "type": "git",

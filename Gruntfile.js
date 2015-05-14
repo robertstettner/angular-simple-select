@@ -5,8 +5,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
   // Default task.
-  grunt.registerTask('test', ['jshint', 'karma:unit', 'ngAnnotate', 'uglify']);
-  grunt.registerTask('default', ['ngAnnotate', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'karma:unit','ngAnnotate', 'uglify', 'copy:main']);
 
   // Project configuration.
   grunt.initConfig({
@@ -61,7 +60,14 @@ module.exports = function (grunt) {
         })
       }
     },
-
+    copy: {
+        main: {
+            files: [
+                { expand: true, cwd: 'src/', src: ['*.css'], dest: 'dest/' },
+                { expand: true, cwd: 'build/', src: ['*.js'], dest: 'dest/'}
+            ]
+        }
+    },
     uglify: {
       options: {banner: '<%= meta.banner %>'},
       build: {
@@ -78,7 +84,7 @@ module.exports = function (grunt) {
         expand: true,
         cwd: 'src',
         src: ['*.js'],
-        dest: 'dist'
+        dest: 'build'
       }
     }
   });

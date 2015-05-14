@@ -1,0 +1,61 @@
+.simple-select {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.simple-select li {
+    position: relative;
+    display: block;
+    color: inherit;
+    line-height: 1.6;
+    cursor: pointer;
+    -webkit-user-select: none;
+            user-select: none;
+}
+
+.simple-select li.tickAll {
+  border-bottom: black;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.simple-select li:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "\f096";
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    height: 22px;
+    width: 18px;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+.simple-select li:after {
+    clear: both;
+    content: " ";
+    display: table;
+}
+.simple-select li span {
+    float: left;
+}
+.simple-select li span:first-child {
+    margin-left: 28px;
+}
+.simple-select li span + span {
+    margin-left: 8px;
+}
+.simple-select li .icon {
+    text-align: center;
+    width: 20px;
+}
+.simple-select li .icon img {
+    width: 8px;
+    height: 8px;
+}
+.simple-select li.active:before {
+    content: "\f046";
+}
