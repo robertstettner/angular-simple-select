@@ -59,3 +59,7 @@
 .simple-select li.active:before {
     content: "\f046";
 }
+
+.simple-select li.disabled {
+    color: rgba(0, 0, 0, 0.3);
+}

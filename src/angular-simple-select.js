@@ -50,7 +50,7 @@
             var html = element.html().length === 0 ? '{{ item[itemName] }}' : element.html();
 
             var template = angular.element('<ul class="simple-select">' +
-                '<li ng-click="tickAll(tickedAll)" ng-class="{active: tickedAll }" class="tickAll"><span>Select All</span></li>' +
+                '<li ng-click="tickAll()" ng-class="{active: tickedAll }" class="tickAll"><span>Select All</span></li>' +
                 '<li ng-repeat="item in collection" ng-disabled="item.disabled" ng-class="{active: item.active, disabled: item.disabled}" ng-click="toggle(item)">' +
                     '<span>'+ html +'</span>' +
                 '</li>' +
@@ -62,7 +62,6 @@
             return function($scope, element, attrs) {
 
                 $scope.clickedItem = null;
-                $scope.clickedTickAll = null;
                 $scope.itemName = $scope.itemName || 'name';
                 $scope.itemTicked = $scope.itemTicked || 'ticked';
                 $scope.itemDisabled = $scope.itemDisabled || 'disabled';
@@ -79,8 +78,15 @@
                     return $sce.trustAsHtml(html);
                 };
 
-                $scope.tickAll = function(tickedAll) {
-                    $scope.clickedTickAll = $scope.tickedAll = !tickedAll;
+                $scope.tickAll = function() {
+                    $scope.tickedAll = !$scope.tickedAll;
+                    if (typeof $scope.tickedAll === 'boolean') {
+                        if ($scope.hasOnTickAll()) {
+                            $scope.onTickAll({data: $scope.tickedAll});
+                        } else {
+                            $scope.tickAllDefault($scope.tickedAll);
+                        }
+                    }
                 };
 
                 $scope.tickAllDefault = function(tickedAll) {
@@ -117,16 +123,6 @@
                     }
 
                 },true);
-
-                $scope.$watch( 'clickedTickAll' , function( val ) {
-                    if (typeof val === 'boolean') {
-                        if ($scope.hasOnTickAll()) {
-                            $scope.onTickAll({data: val});
-                        } else {
-                            $scope.tickAllDefault(val);
-                        }
-                    }
-                }, true);
 
                 $scope.$watch( 'clickedItem' , function( val ) {
                     if ( val && $scope.clickedItem !== null ) {
