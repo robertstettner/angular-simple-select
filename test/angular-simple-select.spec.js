@@ -35,7 +35,7 @@ describe('Simple Select', function() {
             expect(templateAsHtml).toContain('item in collection');
         });
 
-        it('should generate non-tempalate html', function() {
+        it('should generate non-template html', function() {
 
             // proves that the template should generate correctly with the correct list items by default
 

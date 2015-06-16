@@ -33,110 +33,110 @@
  * --------------------------------------------------------------------------------
  */
 
- angular.module( 'simple-select', ['ng'] ).directive( 'simpleSelect' , [ '$sce', '$timeout', '$filter', '$compile',
+angular.module( 'simple-select', ['ng'] ).directive( 'simpleSelect' , [ '$sce', '$timeout', '$filter', '$compile',
     function ( $sce, $timeout, $filter, $compile ) {
-    return {
-        restrict: 'AE',
-        scope: {
-            collection: '=',
-            itemName: '@itemName',
-            itemTicked: '@itemTicked',
-            itemDisabled: '@itemDisabled',
-            onItemClick: '&',
-            onTickAll: '&'
-        },
-        compile: function(element) {
+        return {
+            restrict: 'AE',
+            scope: {
+                collection: '=',
+                itemName: '@itemName',
+                itemTicked: '@itemTicked',
+                itemDisabled: '@itemDisabled',
+                itemUnavailable: '@itemUnavailable',
+                onItemClick: '&',
+                onTickAll: '&'
+            },
+            compile: function(element) {
 
-            var html = element.html().length === 0 ? '{{ item[itemName] }}' : element.html();
-
-            var template = angular.element('<ul class="simple-select">' +
-                '<li ng-click="tickAll()" ng-class="{active: tickedAll }" class="tickAll"><span>Select All</span></li>' +
-                '<li ng-repeat="item in collection" ng-disabled="item.disabled" ng-class="{active: item.active, disabled: item.disabled}" ng-click="toggle(item)">' +
+                var html = element.html().length === 0 ? '{{ item[itemName] }}' : element.html();
+                var template = angular.element('<ul class="simple-select">' +
+                    '<li ng-click="tickAll()" ng-class="{active: tickedAll }" class="tickAll"><span>Select All</span></li>' +
+                    '<li ng-repeat="item in collection" ng-disabled="item[itemDisabled]" ng-class="{active: item[itemTicked], disabled: item[itemDisabled] || item[itemUnavailable]}" ng-click="toggle(item)">' +
                     '<span>'+ html +'</span>' +
-                '</li>' +
+                    '</li>' +
+                    '</ul>');
 
-            '</ul>');
+                element.empty();
 
-            element.empty();
+                return function($scope, element, attrs) {
 
-            return function($scope, element, attrs) {
+                    $scope.clickedItem = null;
+                    $scope.itemName = $scope.itemName || 'name';
+                    $scope.itemTicked = $scope.itemTicked || 'ticked';
+                    $scope.itemDisabled = $scope.itemDisabled || 'disabled';
+                    $scope.itemUnavailable = $scope.itemUnavailable || 'unavailable';
 
-                $scope.clickedItem = null;
-                $scope.itemName = $scope.itemName || 'name';
-                $scope.itemTicked = $scope.itemTicked || 'ticked';
-                $scope.itemDisabled = $scope.itemDisabled || 'disabled';
+                    $scope.hasOnItemClick = function() {
+                        return angular.isDefined(attrs['onItemClick']);
+                    };
 
-                $scope.hasOnItemClick = function() {
-                    return angular.isDefined(attrs['onItemClick']);
-                };
+                    $scope.hasOnTickAll = function() {
+                        return angular.isDefined(attrs['onTickAll']);
+                    };
 
-                $scope.hasOnTickAll = function() {
-                    return angular.isDefined(attrs['onTickAll']);
-                };
+                    $scope.trustHtml = function(html) {
+                        return $sce.trustAsHtml(html);
+                    };
 
-                $scope.trustHtml = function(html) {
-                    return $sce.trustAsHtml(html);
-                };
-
-                $scope.tickAll = function() {
-                    $scope.tickedAll = !$scope.tickedAll;
-                    if (typeof $scope.tickedAll === 'boolean') {
-                        if ($scope.hasOnTickAll()) {
-                            $scope.onTickAll({data: $scope.tickedAll});
-                        } else {
-                            $scope.tickAllDefault($scope.tickedAll);
+                    $scope.tickAll = function() {
+                        $scope.tickedAll = !$scope.tickedAll;
+                        if (typeof $scope.tickedAll === 'boolean') {
+                            if ($scope.hasOnTickAll()) {
+                                $scope.onTickAll({data: $scope.tickedAll});
+                            } else {
+                                $scope.tickAllDefault($scope.tickedAll);
+                            }
                         }
-                    }
-                };
+                    };
 
-                $scope.tickAllDefault = function(tickedAll) {
+                    $scope.tickAllDefault = function(tickedAll) {
 
-                    $scope.collection.forEach(function(val) {
-                        val[$scope.itemTicked] = (_.isUndefined(val[$scope.itemDisabled]) && tickedAll) || (val[$scope.itemDisabled] && tickedAll);
+                        $scope.collection.forEach(function(val) {
+                            val[$scope.itemTicked] = (_.isUndefined(val[$scope.itemDisabled]) && tickedAll) || (val[$scope.itemDisabled] && tickedAll);
+                        });
+
+                    };
+
+                    $scope.toggle = function( item ) {
+                        if (item && !item[$scope.itemDisabled]) {
+                            item[$scope.itemTicked] = !item[$scope.itemTicked];
+                            $scope.clickedItem = item;
+                        }
+                    };
+
+                    $scope.$watch('collection', function(val) {
+
+                        var enabledCount = 0,
+                            tickedCount = 0;
+
+                        if (val) {
+
+                            enabledCount = _.filter(val, function(n) {
+                                return !$scope.itemDisabled || ($scope.itemDisabled && !n[$scope.itemDisabled]);
+                            }).length;
+
+                            tickedCount = _.filter(val, function(n) {
+                                return (!$scope.itemDisabled && n[$scope.itemTicked]) || ($scope.itemDisabled && !n[$scope.itemDisabled] && n[$scope.itemTicked]);
+                            }).length;
+
+                            $scope.tickedAll = enabledCount == tickedCount;
+                        }
+
+                    },true);
+
+                    $scope.$watch( 'clickedItem' , function( val ) {
+                        if ( val && $scope.clickedItem !== null ) {
+                            if ($scope.hasOnItemClick) {
+                                $scope.onItemClick( { data: val } );
+                            }
+                            $scope.clickedItem = null;
+                        }
                     });
 
+                    element.append(template);
+                    $compile(template)($scope);
+
                 };
-
-                $scope.toggle = function( item ) {
-                    if (item && !item[$scope.itemDisabled]) {
-                        item[$scope.itemTicked] = !item[$scope.itemTicked];
-                        $scope.clickedItem = item;
-                    }
-                };
-
-                $scope.$watch('collection', function(val) {
-
-                    var enabledCount = 0,
-                        tickedCount = 0;
-
-                    if (val) {
-
-                        enabledCount = _.filter(val, function(n) {
-                            return !$scope.itemDisabled || ($scope.itemDisabled && !n[$scope.itemDisabled]);
-                        }).length;
-
-                        tickedCount = _.filter(val, function(n) {
-                            return (!$scope.itemDisabled && n[$scope.itemTicked]) || ($scope.itemDisabled && !n[$scope.itemDisabled] && n[$scope.itemTicked]);
-                        }).length;
-
-                        $scope.tickedAll = enabledCount == tickedCount;
-                    }
-
-                },true);
-
-                $scope.$watch( 'clickedItem' , function( val ) {
-                    if ( val && $scope.clickedItem !== null ) {
-                        if ($scope.hasOnItemClick) {
-                            $scope.onItemClick( { data: val } );
-                        }
-                        $scope.clickedItem = null;
-                    }
-                });
-
-                element.append(template);
-                $compile(template)($scope);
-
-            };
-        }
-    };
-}]);
+            }
+        };
+    }]);
