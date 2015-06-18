@@ -48,23 +48,25 @@ angular.module( 'simple-select', ['ng'] ).directive( 'simpleSelect' , [ '$sce', 
             },
             compile: function(element) {
 
-                var html = element.html().length === 0 ? '{{ item[itemName] }}' : element.html();
-                var template = angular.element('<ul class="simple-select">' +
-                    '<li ng-click="tickAll()" ng-class="{active: tickedAll }" class="tickAll"><span>Select All</span></li>' +
-                    '<li ng-repeat="item in collection" ng-disabled="item[itemDisabled]" ng-class="{active: item[itemTicked], disabled: item[itemDisabled] || item[itemUnavailable]}" ng-click="toggle(item)">' +
-                    '<span>'+ html +'</span>' +
-                    '</li>' +
-                    '</ul>');
+                var html = element.html();
 
                 element.empty();
 
                 return function($scope, element, attrs) {
 
                     $scope.clickedItem = null;
-                    $scope.itemName = $scope.itemName || 'name';
-                    $scope.itemTicked = $scope.itemTicked || 'ticked';
-                    $scope.itemDisabled = $scope.itemDisabled || 'disabled';
-                    $scope.itemUnavailable = $scope.itemUnavailable || 'unavailable';
+
+                    var name = $scope.itemName || 'name',
+                        ticked = $scope.itemTicked || 'ticked',
+                        disabled = $scope.itemDisabled || 'disabled',
+                        unavailable = $scope.itemUnavailable || 'unavailable',
+                        template = angular.element(
+                            '<ul class="simple-select">' +
+                                '<li ng-click="tickAll()" ng-class="{active: tickedAll }" class="tickAll"><span>Select All</span></li>' +
+                                '<li ng-repeat="item in collection" ng-disabled="item[\'' + disabled + '\']" ng-class="{active: item[\'' + ticked + '\'], disabled: item[\'' + disabled + '\'] || item[\'' + unavailable + '\']}" ng-click="toggle(item)">' +
+                                    '<span>' + (html.length === 0 ? '{{ item["' + name + '"] }}' : html) + '</span>' +
+                                '</li>' +
+                            '</ul>');
 
                     $scope.hasOnItemClick = function() {
                         return angular.isDefined(attrs['onItemClick']);
@@ -90,41 +92,33 @@ angular.module( 'simple-select', ['ng'] ).directive( 'simpleSelect' , [ '$sce', 
                     };
 
                     $scope.tickAllDefault = function(tickedAll) {
-
                         $scope.collection.forEach(function(val) {
-                            val[$scope.itemTicked] = (_.isUndefined(val[$scope.itemDisabled]) && tickedAll) || (val[$scope.itemDisabled] && tickedAll);
+                            val[ticked] = (_.isUndefined(val[disabled]) && tickedAll) || (val[disabled] && tickedAll);
                         });
-
                     };
 
                     $scope.toggle = function( item ) {
-                        if (item && !item[$scope.itemDisabled]) {
-                            item[$scope.itemTicked] = !item[$scope.itemTicked];
+                        if (item && !item[disabled]) {
+                            item[ticked] = !item[ticked];
                             $scope.clickedItem = item;
                         }
                     };
 
                     $scope.$watch('collection', function(val) {
-
                         var enabledCount = 0,
                             tickedCount = 0;
-
                         if (val) {
-
                             enabledCount = _.filter(val, function(n) {
-                                return !$scope.itemDisabled || ($scope.itemDisabled && !n[$scope.itemDisabled]);
+                                return !disabled || (disabled && !n[disabled]);
                             }).length;
-
                             tickedCount = _.filter(val, function(n) {
-                                return (!$scope.itemDisabled && n[$scope.itemTicked]) || ($scope.itemDisabled && !n[$scope.itemDisabled] && n[$scope.itemTicked]);
+                                return (!disabled && n[ticked]) || (disabled && !n[disabled] && n[ticked]);
                             }).length;
-
                             $scope.tickedAll = enabledCount == tickedCount;
                         }
-
                     },true);
 
-                    $scope.$watch( 'clickedItem' , function( val ) {
+                    $scope.$watch('clickedItem' , function( val ) {
                         if ( val && $scope.clickedItem !== null ) {
                             if ($scope.hasOnItemClick) {
                                 $scope.onItemClick( { data: val } );

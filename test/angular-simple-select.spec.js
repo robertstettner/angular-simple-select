@@ -82,7 +82,6 @@ describe('Simple Select', function() {
             template = $compile(element)($scope);
 
             $dScope = element.isolateScope();
-
             $scope.$apply();
 
         });
@@ -102,8 +101,6 @@ describe('Simple Select', function() {
 
             elem.on('click', function(){
                 $scope.$digest();
-                expect($dScope.itemTicked).toBe('ticked');
-                expect($dScope.clickedItem).toBe(null);
                 expect($dScope.collection[0].ticked).toBe(true);
                 expect($dScope.collection[1].ticked).toBe(false);
                 done();
