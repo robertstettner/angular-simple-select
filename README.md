@@ -1,4 +1,4 @@
-# angular-simple-select</br>[![Build Status](https://secure.travis-ci.org/robertstettner/angular-simple-select.svg?branch=master)](http://travis-ci.org/robertstettner/angular-simple-select) [![Coverage Status](https://coveralls.io/repos/robertstettner/angular-simple-select/badge.svg)](https://coveralls.io/r/robertstettner/angular-simple-select)
+# angular-simple-select</br>[![Build Status](https://secure.travis-ci.org/robertstettner/angular-simple-select.svg?branch=master)](http://travis-ci.org/robertstettner/angular-simple-select) [![Coverage Status](https://coveralls.io/repos/robertstettner/angular-simple-select/badge.svg?branch=master)](https://coveralls.io/r/robertstettner/angular-simple-select?branch=master)
 
 Create a simple list with icon checkboxes.
 
