@@ -5,6 +5,8 @@ install:
 - npm -d install
 - npm install -g grunt-cli
 - npm install -g grunt
+- npm install -g bower
+- bower install
 script:
 - grunt travis
 after_script:
