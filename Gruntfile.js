@@ -7,6 +7,9 @@ module.exports = function (grunt) {
   // Default task.
   grunt.registerTask('default', ['jshint', 'karma:unit','ngAnnotate', 'uglify', 'copy:main']);
 
+  // TravisCI task.
+  grunt.registerTask('travis', ['jshint', 'karma:unit']);
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -21,14 +24,6 @@ module.exports = function (grunt) {
     },
     karma: {
       unit: {configFile: 'test/karma.conf.js', singleRun: true},
-      coverage : {
-        configFile: 'test/karma.conf.js',
-        reporters: ['progress', 'coverage'],
-        preprocessors: { 'src/*.js': ['coverage'] },
-        coverageReporter: { type : 'html', dir : 'coverage/' },
-        singleRun: true
-      },
-      server: {configFile: 'test/karma.conf.js'},
       continuous: {configFile: 'test/karma.conf.js',  background: true }
   },
     jshint: {
