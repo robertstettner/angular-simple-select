@@ -2,16 +2,16 @@
 
 /*
  * Angular JS Simple Select
- * Creates a simple list with icon checkboxes.
+ * Create a simple list with icon checkboxes.
  *
  * Project started on: Tue, 19 Aug 2014
- * Current version: 0.0.2
+ * Current version: 0.0.11
  *
  * Released under the MIT License
  * --------------------------------------------------------------------------------
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 Robert Stettner (https://github.com/robertstettner)
+ * Copyright (c) 2014-2015 Robert Stettner (https://github.com/robertstettner)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

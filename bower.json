@@ -1,8 +1,32 @@
 {
   "name": "angular-simple-select",
-  "version": "0.0.10",
+  "version": "0.0.11",
+  "description": "Create a simple list with icon checkboxes in AngularJS",
+  "author": "Robert Stettner <robert.stettner@gmail.com>",
+  "contributors": [
+    {
+      "name": "Robert Stettner",
+      "email": "robert.stettner@gmail.com",
+      "url": "https://github.com/robertstettner/"
+    },
+    {
+      "name": "Neville Chinan",
+      "email": "neville.chinan@gmail.com",
+      "url": "https://github.com/nchinan/"
+    },
+    {
+      "name": "John Kiernander",
+      "email": "jkiernander@align-alytics.com",
+      "url": "https://github.com/johnkiernander/"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/robertstettner/angular-simple-select",
+  "bugs": {
+    "url": "https://github.com/robertstettner/angular-simple-select/issues"
+  },
   "main": [
-    "dist/angular-simple-select.js",
+    "dist/angular-simple-select.min.js",
     "dist/angular-simple-select.css"
   ],
   "ignore": [
@@ -13,8 +37,7 @@
     "karma.conf.js",
     "demo",
     ".gitignore",
-    "npm-debug.log",
-    "README.md"
+    "npm-debug.log"
   ],
   "dependencies": {
     "angular": "~1.x",
@@ -23,5 +46,19 @@
   },
   "devDependencies": {
     "angular-mocks": "~1.x"
+  },
+  "keywords": [
+    "select",
+    "select box",
+    "list",
+    "checkbox",
+    "multiselect",
+    "angular",
+    "directive",
+    "simple list"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/robertstettner/angular-simple-select.git"
   }
 }

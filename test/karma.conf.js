@@ -7,10 +7,8 @@ module.exports = function(config) {
     // base path, that will be used to resolve files and exclude
     basePath: '..',
 
-
     // frameworks to use
     frameworks: ['jasmine'],
-
 
     // list of files / patterns to load in the browser
     files: [
@@ -21,17 +19,12 @@ module.exports = function(config) {
       'test/*.spec.js'
     ],
 
-
-    // list of files to exclude
-    exclude: [
-
-    ],
-
-
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['dots'],
-
+    reporters: ['progress', 'coverage'],
+    preprocessors: {
+      'src/**/*.js': ['coverage']
+    },
 
     // web server port
     port: 9876,
@@ -59,7 +52,24 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
     browsers: ['PhantomJS'],
-
+    coverageReporter: {
+      reporters: [
+        {
+          type: 'lcov',
+          dir: 'coverage/',
+          subdir: '.',
+          instrumenter: {
+            '**/*.js': 'istanbul'
+          }
+        },
+        {
+          type: 'text-summary',
+          instrumenter: {
+            '**/*.js': 'istanbul'
+          }
+        }
+      ]
+    },
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
